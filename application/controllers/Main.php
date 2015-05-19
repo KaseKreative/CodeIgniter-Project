@@ -23,4 +23,9 @@ class Main extends CI_Controller {
     echo "Hello World!";
 		// $this->load->view('welcome_message');
 	}
+	public function login()
+	{
+    echo "Hello World! This is the login";
+		// $this->load->view('welcome_message');
+	}
 }
