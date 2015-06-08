@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'localhost';
+$config['base_url'] = 'http://localhost:8888/Project2ASL/ASLProject2';
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ $config['base_url'] = 'localhost';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -498,3 +498,14 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+// Facebook
+$config['facebook']['appID']	= '1586783278277546';
+$config['facebook']['appSecret']	= 'a3ead2a4ccbc49ca014eb7143bb86692';
+$config['facebook']['redirect_url'] = 'http://localhost:8888/Project2ASL/ASLProject2/main/loggedMap';
+$config['facebook']['permissions'] = array(
+  'email',
+  'user_location',
+  'user_birthday'
+);

@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>Welcome to CodeIgniter!</h1>
 
 	<div id="body">
-<h1>This Is The Index</h1>
+<h1>This Is The Welcome Message</h1>
 </div>
 
 </body>
