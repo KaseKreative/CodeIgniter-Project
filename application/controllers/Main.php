@@ -18,7 +18,7 @@ class Main extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	
+
 	public function Index()
 	{
 		$this->home();
@@ -26,7 +26,7 @@ class Main extends CI_Controller {
 
 	public function home()
 	{
-		
+
 		$data = array();
 		$data['sessionExist'] = $this->facebook->sessionExist();
 		if($data['sessionExist']){
@@ -39,7 +39,7 @@ class Main extends CI_Controller {
 		$this->load->view('home', $data);
 		$this->load->view('footer');
 	}
-	
+
 	public function Loggedmap()
 	{
 		$data = array();
@@ -56,7 +56,7 @@ class Main extends CI_Controller {
 			$LL['long'] = 'null';
 			$user['name'] = $data['name'];
 			// Checking if the user is in the databse vv
-		
+
 			$userCheck = $this->get_db->userExist($user);
 			// var_dump($userCheck);
 			if(!$userCheck){
@@ -71,7 +71,7 @@ class Main extends CI_Controller {
 		$data['map'] = $this->googlemaps->create_map();
 		$trainer = $this->get_db->selectUserTrainer($user['facebookID']);
 			if($trainer == 1){
-			redirect('http://localhost:8888/Project2ASL/ASLProject2/main/trainerMap');	
+			redirect('http://localhost:8888/Project2ASL/ASLProject2/main/trainerMap');
 		} else {
 		$this->load->view('view_mapHeader', $data);
 		$this->load->view('map', $data);
@@ -105,7 +105,7 @@ class Main extends CI_Controller {
 	{
 		$this->load->library('facebook');
 		$userID = $this->facebook->get_user_id();
-		
+
 		if(!$_POST['gymSearch']){
 				redirect('http://localhost:8888/Project2ASL/ASLProject2/main/map');
 		}
@@ -169,13 +169,13 @@ class Main extends CI_Controller {
 			$this->load->view('mapSearch', $data);
 			$this->load->view('footer');
 	}
-	
+
 	public function logout(){
 	session_destroy();
-	redirect('http://localhost:8888/Project2ASL/ASLProject2');	
+	redirect('http://localhost:8888/Project2ASL/ASLProject2');
 	}
 	// TRAINER ROUTES --------------------------------------------------
-	
+
 	public function trainer(){
 			$trainer = $_GET['trainer'];
 			$this->load->model('trainer');
@@ -186,7 +186,7 @@ class Main extends CI_Controller {
 				redirect('http://localhost:8888/Project2ASL/ASLProject2/main/map');
 			}
 	}
-	
+
 	public function trainerMap(){
 			$this->load->library('geoplugin');
 			$ip = '72.238.70.235'; // This is changed in the Geoplugin page
@@ -206,11 +206,11 @@ class Main extends CI_Controller {
 			$this->load->view('trainer_map', $data);
 			$this->load->view('footer');
 	}
-	
+
 	public function trainerSearch(){
 			$this->load->library('facebook');
 			$userID = $this->facebook->get_user_id();
-			
+
 			if(!$_POST['gymSearch']){
 					redirect('http://localhost:8888/Project2ASL/ASLProject2/main/trainerMap');
 			}
@@ -275,40 +275,40 @@ class Main extends CI_Controller {
 				$this->load->view('mapSearch', $data);
 				$this->load->view('footer');
 	}
-	
+
 		public function traineeList(){
 			$sess['sessionExist'] = $this->facebook->sessionExist();
 			$this->load->view('trainer_header', $sess);
 			$this->load->view('traineeList', $_POST);
 			$this->load->view('footer');
 		}
-		
-		
+
+
 		public function inbox(){
 		$this->load->model('messages');
 		$sess['sessionExist'] = $this->facebook->sessionExist();
-		
+
 		$this->load->view('trainer_header', $sess);
 		$this->load->view('inbox');
 		$this->load->view('footer');
 		}
-		
+
 		public function delete(){
 			$id = $_GET['id'];
 			$this->load->model('messages');
 			$this->messages->delete($id);
 			redirect('http://localhost:8888/Project2ASL/ASLProject2/main/inbox');
 		}
-		
+
 		public function sendRequest(){
 			$sess['sessionExist'] = $this->facebook->sessionExist();
 			$_GET['usersID'] = $this->facebook->get_user_id();
-			$this->load->view('trainer_header', $sess);	
+			$this->load->view('trainer_header', $sess);
 			$this->load->view('sendRequest', $_GET);
-			$this->load->view('footer');	
+			$this->load->view('footer');
 		}
-	
-	
+
+
 		public function sendMail(){
 		$_POST['user'] = $this->facebook->get_user_name();
 		$_POST['userID'] = $this->facebook->get_user_id();
@@ -317,8 +317,8 @@ class Main extends CI_Controller {
 		$this->messages->sendMessage($_POST);
 		redirect('http://localhost:8888/Project2ASL/ASLProject2/main/');
 		}
-	
-	
+
+
 		public function acceptTrainer(){
 		// var_dump($_GET);
 		$data = array(
@@ -334,8 +334,8 @@ class Main extends CI_Controller {
 		$this->messages->acceptMessage($data);
 		redirect('http://localhost:8888/Project2ASL/ASLProject2/main/inbox');
 		}
-	
-	
+
+
 	public function venmo(){
 		$this->load->library('facebook');
 		$userID = $this->facebook->get_user_id();
@@ -351,21 +351,29 @@ class Main extends CI_Controller {
 		'weekDay'=> $_GET['weekDay']
  		);
 		$quotes = array('"', '"');
-		
+
 		foreach($dbUpdate as $key=>$val){
 			// echo $key .'<br>'. $val;
 			$key = str_replace($quotes, "", "$key");
 			$val = str_replace($quotes, "", "$val");
-			echo $key.' : '.$val.'<br>';
+			// echo $key.' : '.$val.'<br>';
 			$dbUpdate[$key] = $val;
 		}
 		$this->load->model('get_db');
 		$this->get_db->insertTrainee($dbUpdate);
-		redirect('https://api.venmo.com/v1/oauth/authorize?client_id=2649&scope=make_payments&response_type=code');
-	}	
-	
+		redirect('https://api.venmo.com/v1/oauth/authorize?client_id=2649&scope=make_payments%20access_profile&response_type=token');
+	}
+
 	public function venmoTransaction(){
-		$code = $_GET['code'];
-		var_dump($code);
+		$data = array();
+		$this->load->library('facebook');
+		$data['facebookID'] = $this->facebook->get_user_id();
+		$data['code'] = $_GET[ 'access_token'];
+		$this->load->model('venmo');
+		$userData = $this->venmo->userData($data['code']);
+		// var_dump($userData);
+		$data['displayName'] = $userData['data']->user->display_name;
+		$data['venmoId'] = $userData['data']->user->id;
+		$this->venmo->venmoCode($data);
 	}
 }
